@@ -19,20 +19,37 @@ for (let i = 0; i < 7; i++) {
 
 //controle da vez do jogador
 let pinkTurn = true;
+let lastMove = null;
+
+//Lógica para verificar as casas adjacentes
+function isAdjacent(lastBtn, currentBtn) {
+  const lastIndex = [...buttons].indexOf(lastBtn);
+  const currentIndex = [...buttons].indexOf(currentBtn);
+  
+  const diff = Math.abs(lastIndex - currentIndex);
+
+  return diff === 1 || diff === 7; 
+}
 
 //Lógica para clicar os botões
 buttons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      if (btn.classList.contains(noPointerClass)) return;
-  
+  btn.addEventListener("click", () => {
+    if (btn.classList.contains(noPointerClass)) return;
+
+    // Se for o primeiro movimento ou a casa for adjacente, pode prosseguir
+    if (lastMove === null || isAdjacent(lastMove, btn)) {
       btn.classList.add(noPointerClass);
-  
+      
+      // Lógica para trocar de cor
       if (pinkTurn) {
         btn.classList.add(pinkClass);
       } else {
         btn.classList.add(cianoClass);
       }
-  
+
+      lastMove = btn; 
+
+      // Lógica de avisar o ganhador
       if (checkGameWinner && checkGameWinner()) {
         setTimeout(() => {
           alert(`${pinkTurn ? "Rosa" : "Ciano"} venceu!`);
@@ -40,23 +57,27 @@ buttons.forEach(btn => {
         }, 10);
         return;
       }
-  
+
       pinkTurn = !pinkTurn;
       statusText.textContent = pinkTurn ? "Vez do Jogador Rosa" : "Vez do Jogador Ciano";
-  
+
       statusText.classList.remove("marked-pink", "marked-ciano");
       statusText.classList.add(pinkTurn ? "marked-pink" : "marked-ciano");
 
-
+      // Lógica de empate
       if ([...buttons].every(button => button.classList.contains(noPointerClass))) {
         setTimeout(() => {
-            alert("O jogo terminou em empate!");
-            resetGame();
+          alert("O jogo terminou em empate!");
+          resetGame();
         }, 10);
         return;
+      }
+    } else {
+      alert("Escolha uma casa adjacente!"); 
     }
-    });
   });
+});
+
 
 //Lógica para checar o ganhador
 function checkGameWinner() {
@@ -98,6 +119,7 @@ function checkGameWinner() {
     });
   
     pinkTurn = true;
+    lastMove = null;
   
     statusText.textContent = "Vez do Jogador Rosa";
     statusText.classList.remove("marked-ciano");
