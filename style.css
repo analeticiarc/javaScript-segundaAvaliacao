@@ -1,22 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+
 :root {
     --size: 40px;
-    font-family: Inter, sans-serif;
   }
   
   *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
+  background-color: #21223C;
   }
   
   ul, ol {
     list-style-type: none;
   }
-  
-  h2 {
-    margin-bottom: 10px;
-  }
-  
+
   .content {
     display: flex;
     place-content: center;
@@ -28,6 +27,18 @@
   .content {
     display: flex;
     flex-direction: column;
+  }
+
+  .content > h1{
+    margin-bottom: 10px;
+
+    font-family: 'Orbitron', sans-serif;
+    font-size: 50px;
+    color: #FFFDFF;
+    text-shadow: 
+        2px 2px 4px #FF55E2,  
+        -2px -2px 4px #04E0F8; 
+
   }
   
   .table {
@@ -47,9 +58,12 @@
     width: var(--size);
   
     background-color: #b4b4b4;
-    margin: 2px;
+    margin: 5px;
+
+    box-shadow: 
+        2px 2px 5px #1a1a1a,  
+        -2px -2px 5px #F5F5F5;
   
-    clip-path: circle();
     transition: 200ms;
   }
   
@@ -57,11 +71,23 @@
     filter: brightness(0.9);
   }
   
-  .column.marked-red {
-    background-color: red;
+  .column.marked-pink {
+    background-color: #FF55E2;
   }
   
-  .column.marked-blue {
-    background-color: blue;
+  .column.marked-ciano {
+    background-color: #04E0F8;
   }
+
+  .no-pointer {
+    pointer-events: none;
+  }
+
+  .rodada{
+    margin-top: 10px;
+
+    font-family: "Orbitron", sans-serif;
+    font-size: 20px;
+    color: #FEFEFE;
+}
 
