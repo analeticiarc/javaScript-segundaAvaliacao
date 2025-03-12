@@ -46,6 +46,15 @@ buttons.forEach(btn => {
   
       statusText.classList.remove("marked-pink", "marked-ciano");
       statusText.classList.add(pinkTurn ? "marked-pink" : "marked-ciano");
+
+
+      if ([...buttons].every(button => button.classList.contains(noPointerClass))) {
+        setTimeout(() => {
+            alert("O jogo terminou em empate!");
+            resetGame();
+        }, 10);
+        return;
+    }
     });
   });
 
