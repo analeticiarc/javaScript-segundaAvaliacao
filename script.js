@@ -23,13 +23,20 @@ let lastMove = null;
 
 //Lógica para verificar as casas adjacentes
 function isAdjacent(lastBtn, currentBtn) {
-  const lastIndex = [...buttons].indexOf(lastBtn);
-  const currentIndex = [...buttons].indexOf(currentBtn);
-  
-  const diff = Math.abs(lastIndex - currentIndex);
+  const buttonsArray = [...buttons];
 
-  return diff === 1 || diff === 7; 
+  const indiceAnterior = buttonsArray.indexOf(lastBtn); // pega o índice anterior
+  const indiceAtual = buttonsArray.indexOf(currentBtn); // pega o índice atual
+  
+  
+  // compara a diferença desses indices
+  if (Math.abs(indiceAnterior - indiceAtual) === 1 || Math.abs(indiceAnterior - indiceAtual) === 7) {
+    return true; 
+  }
+
+  return false; 
 }
+
 
 //Lógica para clicar os botões
 buttons.forEach(btn => {
