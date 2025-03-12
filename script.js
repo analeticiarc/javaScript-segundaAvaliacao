@@ -24,18 +24,29 @@ let lastMove = null;
 //Lógica para verificar as casas adjacentes
 function isAdjacent(lastBtn, currentBtn) {
   const buttonsArray = [...buttons];
-
+  
   const indiceAnterior = buttonsArray.indexOf(lastBtn); // pega o índice anterior
   const indiceAtual = buttonsArray.indexOf(currentBtn); // pega o índice atual
   
+  const lastRow = Math.floor(indiceAnterior / 7); // 
+  const currentRow = Math.floor(indiceAtual / 7); // 
   
-  // compara a diferença desses indices
-  if (Math.abs(indiceAnterior - indiceAtual) === 1 || Math.abs(indiceAnterior - indiceAtual) === 7) {
-    return true; 
+  // Verifica se as casas estão adjacentes horizontalmente, verticalmente ou diagonalmente
+  if (
+    Math.abs(indiceAnterior - indiceAtual) === 1 ||  
+    Math.abs(indiceAnterior - indiceAtual) === 7 ||  
+    Math.abs(indiceAnterior - indiceAtual) === 6 ||  
+    Math.abs(indiceAnterior - indiceAtual) === 8      
+  ) {
+    
+    if (lastRow === currentRow || Math.abs(lastRow - currentRow) === 1) {
+      return true;
+    }
   }
 
-  return false; 
+  return false;
 }
+
 
 
 //Lógica para clicar os botões
@@ -43,11 +54,11 @@ buttons.forEach(btn => {
   btn.addEventListener("click", () => {
     if (btn.classList.contains(noPointerClass)) return;
 
-    // Se for o primeiro movimento ou a casa for adjacente, pode prosseguir
+    //Se for o primeiro movimento ou a casa for adjacente, pode prosseguir
     if (lastMove === null || isAdjacent(lastMove, btn)) {
       btn.classList.add(noPointerClass);
       
-      // Lógica para trocar de cor
+      //Lógica para trocar de cor
       if (pinkTurn) {
         btn.classList.add(pinkClass);
       } else {
@@ -56,7 +67,7 @@ buttons.forEach(btn => {
 
       lastMove = btn; 
 
-      // Lógica de avisar o ganhador
+      //Lógica de avisar o ganhador
       if (checkGameWinner && checkGameWinner()) {
         setTimeout(() => {
           alert(`${pinkTurn ? "Rosa" : "Ciano"} venceu!`);
@@ -71,7 +82,7 @@ buttons.forEach(btn => {
       statusText.classList.remove("marked-pink", "marked-ciano");
       statusText.classList.add(pinkTurn ? "marked-pink" : "marked-ciano");
 
-      // Lógica de empate
+      //Lógica de empate
       if ([...buttons].every(button => button.classList.contains(noPointerClass))) {
         setTimeout(() => {
           alert("O jogo terminou em empate!");
